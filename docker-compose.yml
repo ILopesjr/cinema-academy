@@ -1,0 +1,35 @@
+version: "3.0"
+
+services:
+  app:
+    build: .
+    command: npm install
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/cinema_academy
+    depends_on:
+      - mysql
+      # - mongo
+
+  mysql:
+    container_name: mysql
+    restart: always
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: cinema_academy
+    volumes:
+      - './data_mysql/db:/var/lib/mysql'
+    ports:
+      - "3306:3306"
+  # mongo:
+  #   container_name: mongo
+  #   restart: always
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_DATABASE: cinema_academy
+  #   volumes:
+  #     - './data_mongo/db:/data/db'
+  #   ports:
+  #     - "27017:27017"
